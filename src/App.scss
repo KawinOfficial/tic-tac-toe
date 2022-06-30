@@ -1,0 +1,115 @@
+@import url("https://fonts.googleapis.com/css2?family=Solway:wght@300;400;500;700;800&display=swap");
+
+$colorY: #ebe645;
+$colorG: #80ed99;
+$lineH: 150%;
+$shadow: 1px 4px 4px #000;
+
+* {
+  font-family: "Solway", serif;
+}
+
+@mixin textSP {
+  font-weight: 900;
+  text-shadow: $shadow;
+}
+
+.footer-page {
+  width: 100%;
+  background-color: white;
+  border-radius: 30px 30px 0px 0px;
+  padding: 0.6rem;
+  z-index: 5;
+  cursor: pointer;
+  position: fixed;
+}
+
+.blocker {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.logo {
+  @include textSP;
+  letter-spacing: 20px;
+  line-height: 90%;
+  font-size: calc(100px + 1.8vw);
+  
+  :first-child {
+    color: #fff;
+    font-size: x-large;
+    letter-spacing: normal;
+    line-height: $lineH;
+  }
+  :nth-child(2) {
+    color: $colorY;
+  }
+  :nth-child(3) {
+    color: $colorG;
+  }
+  :nth-child(4) {
+    color: #39a2db;
+  }
+  :last-child {
+    text-align: end;
+    color: #fff;
+    font-size: x-large;
+    letter-spacing: normal;
+    line-height: $lineH;
+  }
+}
+
+.button-main {
+  box-shadow: $shadow;
+  background-color: #dff6ff;
+  color: #06283d;
+  border-radius: 30px;
+  width: 150px;
+  font-size: x-large;
+  font-weight: bold;
+  margin-inline: 0.8rem;
+
+  &:hover {
+    background-color: #47b5ff;
+  }
+  &:active {
+    background-color: #1363df;
+  }
+}
+
+@mixin player-bar {
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: x-large;
+  padding-inline: 2rem;
+}
+
+.player1 {
+  @include player-bar;
+  background-color: #47b5ff;
+}
+
+.player2 {
+  @include player-bar;
+  background-color: #1363df;
+  flex-direction: row-reverse;
+}
+
+.board {
+  @include textSP;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.win-text {
+  font-size: 40px;
+  font-weight: 900;
+}
