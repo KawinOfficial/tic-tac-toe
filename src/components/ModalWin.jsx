@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Modal,
   ModalOverlay,
@@ -20,7 +19,15 @@ export default function ModalWin({ isOpen, onClose, winner, handleReset }) {
     <>
       <Modal isOpen={isOpen} onClose={onClose} isCentered size="lg">
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent
+          bg={
+            winner == "Player 1"
+              ? "#FDB833"
+              : winner == "Player 2"
+              ? "#1363df"
+              : "#fff"
+          }
+        >
           <ModalBody>
             <Center flexDirection="column" p={5} gap={5}>
               <Image

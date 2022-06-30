@@ -37,7 +37,7 @@ export default function Home() {
             </motion.p>
           ))}
         </motion.div>
-        <Buttons text="Begin" />
+        <Buttons text="Start" />
       </Center>
     </>
   );

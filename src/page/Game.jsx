@@ -1,35 +1,7 @@
 import { useState, useEffect } from "react";
-import {
-  Box,
-  Text,
-  Circle,
-  Flex,
-  SimpleGrid,
-  Center,
-  useDisclosure,
-} from "@chakra-ui/react";
-import { Buttons, ModalWin } from "../components";
+import { Box, SimpleGrid, Center, useDisclosure } from "@chakra-ui/react";
+import { Buttons, ModalWin, PlayerBadge, Indicator } from "../components";
 import { motion } from "framer-motion";
-
-const WinCounter = ({ counter }) => (
-  <Flex fontWeight="bold" flexDirection="column" alignItems="center">
-    <Text fontSize="small">WIN</Text>
-    <Text fontSize="4xl">{counter}</Text>
-  </Flex>
-);
-
-const PlayerAvatar = ({ text, symbol, bg }) => (
-  <Flex
-    alignItems="center"
-    gap={5}
-    flexDirection={text == "Player 2" ? "row-reverse" : ""}
-  >
-    <Circle bg="#fff" size={12} color={bg} fontWeight="bold">
-      {symbol}
-    </Circle>
-    <Text>{text}</Text>
-  </Flex>
-);
 
 export default function Game() {
   const initialBoard = [
@@ -37,8 +9,6 @@ export default function Game() {
     ["", "", ""],
     ["", "", ""],
   ];
-
-  // Modal function
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [board, setBoard] = useState(initialBoard);
@@ -68,6 +38,7 @@ export default function Game() {
       setWinner(symbol == "X" ? "Player 1" : "Player 2");
       setCounter({ ...counter, [symbol]: counter[symbol] + 1 });
       onOpen();
+      return true;
     }
   };
 
@@ -79,21 +50,29 @@ export default function Game() {
     for (let i = 0; i < 3; i++) {
       const col = board.map((value) => value[i]);
       const row = board[i];
-
       // Check Row
-      checkArray(row);
+      if (checkArray(row)) {
+        return;
+      }
       // Check Column
-      checkArray(col);
-      // Check diagonal Right
-      checkArray(diagonalR);
-      // Check diagonal Left
-      checkArray(diagonalL);
+      else if (checkArray(col)) {
+        return;
+      }
     }
 
-    // Check Draw
-    if (draw.length == 9) {
+    // Check diagonal Right
+    if (checkArray(diagonalR)) {
+      return;
+    }
+    // Check diagonal Left
+    else if (checkArray(diagonalL)) {
+      return;
+    }
+    //  Check draw
+    else if (draw.length == 9) {
       setWinner("It's a draw!");
       onOpen();
+      return;
     }
   };
 
@@ -103,17 +82,14 @@ export default function Game() {
 
   return (
     <>
+      <Indicator player={player} />
       {/* Player 1 */}
-      <motion.div
-        initial={{ opacity: 0, y: -150 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-      >
-        <Box h="10vh" className="player1">
-          <PlayerAvatar symbol="X" bg="#47b5ff" text="Player 1" />
-          <WinCounter counter={counter["X"]} />
-        </Box>
-      </motion.div>
+      <PlayerBadge
+        symbol="X"
+        bg="#FDB833"
+        text="Player 1"
+        counter={counter["X"]}
+      />
 
       {/* Play Board */}
       <motion.div
@@ -135,7 +111,7 @@ export default function Game() {
                         boxSize="12vh"
                         fontSize="7xl"
                         onClick={() => handleClick(i, j)}
-                        color={board[i][j] == "X" ? "#47b5ff" : "#1363df"}
+                        color={board[i][j] == "X" ? "#FDB833" : "#1363df"}
                         className="board"
                       >
                         {board[i][j]}
@@ -144,6 +120,7 @@ export default function Game() {
                 </SimpleGrid>
               ))}
           </SimpleGrid>
+
           {/* Button */}
           <Box>
             <Buttons text="Back" />
@@ -153,16 +130,12 @@ export default function Game() {
       </motion.div>
 
       {/* Player 2 */}
-      <motion.div
-        initial={{ opacity: 0, y: 150 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.8 }}
-      >
-        <Box h="12vh" className="player2">
-          <PlayerAvatar symbol="H" bg="#1363df" text="Player 2" />
-          <WinCounter counter={counter["H"]} />
-        </Box>
-      </motion.div>
+      <PlayerBadge
+        symbol="H"
+        bg="#1363df"
+        text="Player 2"
+        counter={counter["H"]}
+      />
 
       <ModalWin
         isOpen={isOpen}

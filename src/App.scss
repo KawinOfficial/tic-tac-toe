@@ -92,24 +92,38 @@ $shadow: 1px 4px 4px #000;
 
 .player1 {
   @include player-bar;
-  background-color: #47b5ff;
+  background-color: #FDB833;
+  flex-direction: row-reverse;
+  height: 10vh;
 }
 
 .player2 {
   @include player-bar;
   background-color: #1363df;
-  flex-direction: row-reverse;
+  height: 12vh;
+  
 }
 
 .board {
   @include textSP;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   cursor: pointer;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+  }
 }
 
 .win-text {
   font-size: 40px;
   font-weight: 900;
+}
+
+.indicator {
+  position: fixed;
+  border-color: #fff;
+  color: #fff;
+  z-index: 5;
 }

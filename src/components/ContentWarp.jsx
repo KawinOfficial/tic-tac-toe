@@ -46,7 +46,7 @@ export default function ContentWarp({ content: Content }) {
         <Content />
       </Box>
 
-      {/* Blocker click outside */}
+      {/* Block click outside */}
       {showFooter && (
         <motion.div
           variants={blockerVariants}
